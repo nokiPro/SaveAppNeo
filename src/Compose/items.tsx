@@ -9,13 +9,18 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 
 import { FAB } from "react-native-paper";
 
-export function Item() {
-  
+export interface ItemProps {
+  defaultValue?: string;
+  onChangeText?: (value: string) => void;
+  onPressAddButton?: () => void;
+}
+
+export function Item(props: ItemProps) {
   return (
     <View
       style={{
@@ -48,10 +53,14 @@ export function Item() {
           paddingLeft: 5,
         }}
         multiline={true}
-        onChangeText={() => {}}
+        onChangeText={props.onChangeText}
+        defaultValue={props.defaultValue}
       />
-      <TouchableOpacity style={{ top: 10, left: "50%" }}>
-        <Text style={{fontSize: 30}}>+</Text>
+      <TouchableOpacity
+        style={{ top: 10, left: "50%" }}
+        onPress={props.onPressAddButton}
+      >
+        <Text style={{ fontSize: 30 }}>+</Text>
       </TouchableOpacity>
     </View>
   );

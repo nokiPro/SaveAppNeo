@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   FlatList,
   Platform,
-  ListRenderItemInfo
+  ListRenderItemInfo,
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -27,7 +27,7 @@ const screenWidth = Dimensions.get("screen").width;
 export function TaskAddScreen() {
   const [deadlineDate, setDeadlineDate] = React.useState("");
   const [taskName, setTaskName] = React.useState("");
-  const [taskItems, setTaskItems] = React.useState<string[]>(["", ""]);
+  const [taskItems, setTaskItems] = React.useState<string[]>([]);
   const itemFrame = [""];
 
   const navigation = useNavigation();
@@ -38,21 +38,19 @@ export function TaskAddScreen() {
     navigation.goBack();
   };
 
-  const renderPictureInfo = ({ item }: ListRenderItemInfo<any>) => {
+  const renderTaskItem = ({ item, index }: ListRenderItemInfo<string>) => {
     return (
-      <View>{Item()}</View>
+      <Item
+        defaultValue={item}
+        onPressAddButton={() => {
+          const newTaskItems = taskItems.slice();
+          newTaskItems.splice(index + 1, 0, "");
+          setTaskItems(newTaskItems);
+        }}
+      />
     );
   };
 
-  const newItem = () => {
-    return (
-      <FlatList
-        data={itemFrame}
-        renderItem={renderPictureInfo}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    );
-  }
   //   const DATA = [
   //   {
   //     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -146,11 +144,23 @@ export function TaskAddScreen() {
                 setTaskItems(newTaskItems);
               }}
             />
-            <TouchableOpacity style={{ top: 10, left: "50%" }} onPress={() => {newItem()}}>
+            <TouchableOpacity
+              style={{ top: 10, left: "50%" }}
+              onPress={() => {
+                const newTaskItems = taskItems.slice();
+                newTaskItems.splice(0, 0, "new task item");
+                setTaskItems(newTaskItems);
+              }}
+            >
               <Text style={{ fontSize: 30 }}>+</Text>
             </TouchableOpacity>
           </View>
           {/* ====================================================================== */}
+          <FlatList
+            data={taskItems}
+            renderItem={renderTaskItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
           {/* ====================================================================== */}
           <View
             style={{
