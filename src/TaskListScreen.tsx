@@ -57,6 +57,8 @@ export function TaskListScreen() {
     navigation.addListener("focus", initialize); // 追加
   }); // 追加
 
+
+//===============================================================================
   const renderTask = ({ item, index }: ListRenderItemInfo<any>) => {
     return (
       <View style={styles.flatListContainer}>
@@ -86,7 +88,7 @@ export function TaskListScreen() {
     </SafeAreaView>
   );
 }
-
+//=====================================================================================
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",

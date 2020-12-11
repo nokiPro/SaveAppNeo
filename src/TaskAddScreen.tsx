@@ -75,7 +75,7 @@ export function TaskAddScreen() {
   //   const renderItem = ({ item }) => (
   //     <Item title={item.title} />
   //   );
-
+//=============================================================================
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -205,7 +205,7 @@ export function TaskAddScreen() {
     </SafeAreaView>
   );
 }
-
+//==============================================================================
 const styles = StyleSheet.create({
   container: {
     flex: 1,
