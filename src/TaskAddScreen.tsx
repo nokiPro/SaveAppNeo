@@ -34,7 +34,7 @@ const screenWidth = Dimensions.get("screen").width;
 export function TaskAddScreen() {
   const [deadlineDate, setDeadlineDate] = React.useState("");
   const [taskName, setTaskName] = React.useState("");
-  const [taskItems, setTaskItems] = React.useState<string[]>([""]);
+  const [taskItems, setTaskItems] = React.useState<string[]>(["", ""]);
 
   // const selectedItem = props.route.params.Task;
 
@@ -65,7 +65,7 @@ export function TaskAddScreen() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{ flexGrow: 1 }}>
         <KeyboardAvoidingView
           style={{ flex: 1, width: screenWidth * 1 }}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -96,7 +96,7 @@ export function TaskAddScreen() {
             renderItem={renderTaskItem}
             keyExtractor={(item, index) => index.toString()}
           />
-          <FAB style={{ top: 130, left: "6%" }} icon="check" onPress={onSave} />
+          <FAB style={{ top: "10%",left: "5%" , width: 56, marginBottom: 50,}} icon="check" onPress={onSave} />
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>

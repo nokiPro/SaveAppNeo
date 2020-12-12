@@ -19,6 +19,9 @@ import { FAB } from "react-native-paper";
 import { Item } from "../src/Compose/items";
 import { useNavigation, RouteProp } from "@react-navigation/native";
 
+import { save } from "./Store";
+
+
 type TaskDetailScreenRouteProp = RouteProp<RootStackParamList, "TaskDetail">;
 
 type Props = {
@@ -31,18 +34,18 @@ const screenWidth = Dimensions.get("screen").width;
 export function TaskDetailScreen(props: Props) {
   //const selectedItem = props.route.params.Task;
   const selectedItem = props.route.params.Task;
+  const selectedTaskItem = props.route.params.Task.taskItems;
+  const navigation = useNavigation();
 
-  const kkkk = () => {
-    console.log(selectedItem);
-  }
+  const [deadlineDate, setDeadlineDate] = React.useState("");
+  const [taskName, setTaskName] = React.useState("");
+  const [taskItems, setTaskItems] = React.useState<string[]>([]);
 
-  // const onSave = () => {
-  //   save(deadlineDate, taskName, taskItems, Date.now());
-  //   console.log();
-  //   navigation.goBack();
-  // };
-
-  const taskItems = selectedItem.taskItems;
+  const onSave = () => {
+    save(deadlineDate, taskName, taskItems, selectedItem.createdAt)
+    console.log();
+    navigation.goBack();
+  };
 
     const renderTaskItem = ({ item, index }: ListRenderItemInfo<string>) => {
       return (
@@ -51,7 +54,7 @@ export function TaskDetailScreen(props: Props) {
           onPressAddButton={() => {
             const newTaskItems = taskItems.slice();
             newTaskItems.splice(index + 1, 0, "");
-            //setTaskItems(newTaskItems);
+            setTaskItems(newTaskItems);
             console.log(taskItems);
           }}
           onChangeText={(text) => {
@@ -63,7 +66,7 @@ export function TaskDetailScreen(props: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{ flexGrow: 1 }}>
         <KeyboardAvoidingView
           style={{ flex: 1, width: screenWidth * 1 }}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -74,18 +77,18 @@ export function TaskDetailScreen(props: Props) {
               placeholder="締め切り"
               autoCapitalize="none"
               defaultValue={selectedItem.deadlineDate}
-              // onChangeText={(deadlineDate) => {
-              //   setDeadlineDate(deadlineDate);
-              // }}
+              onChangeText={(deadlineDate) => {
+                setDeadlineDate(deadlineDate);
+              }}
             />
             <TextInput
               style={styles.inputTitle}
               placeholder="タスク名"
               autoCapitalize="none"
               defaultValue={selectedItem.taskName}
-              // onChangeText={(taskName) => {
-              //   setTaskName(taskName);
-              // }}
+              onChangeText={(taskName) => {
+                setTaskName(taskName);
+              }}
             />
           </View>
           <FlatList
@@ -95,9 +98,9 @@ export function TaskDetailScreen(props: Props) {
             keyExtractor={(item, index) => index.toString()}
           />
           <FAB
-            style={{ top: 130, left: "6%" }}
+            style={{ top: 60, left: "5%", width: 56, marginBottom: 50 }}
             icon="check"
-            onPress={() => {}}
+            onPress={() => {onSave()}}
           />
         </KeyboardAvoidingView>
       </ScrollView>
