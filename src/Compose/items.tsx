@@ -31,14 +31,6 @@ export function Item(props: ItemProps) {
       }}
     >
       <FAB style={{ top: 20, left: 20 }} icon="check" onPress={() => {}} />
-      <View
-        style={{
-          borderLeftWidth: 3,
-          height: 120,
-          top: 40,
-          left: 45,
-        }}
-      ></View>
       <TextInput
         style={{
           borderWidth: 1,
@@ -57,10 +49,10 @@ export function Item(props: ItemProps) {
         defaultValue={props.defaultValue}
       />
       <TouchableOpacity
-        style={{ top: 10, left: "50%" }}
+        style={{ top: 130, left: "50%" }}
         onPress={props.onPressAddButton}
       >
-        <Text style={{ fontSize: 30 }}>+</Text>
+        <Text style={{ fontSize: 30, color: "#c4d4e3" }}>+</Text>
       </TouchableOpacity>
     </View>
   );

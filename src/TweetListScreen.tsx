@@ -1,13 +1,26 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
+import { FAB, List } from "react-native-paper";
+
+import { useNavigation } from "@react-navigation/native";
 
 export function TweetListScreen() {
+  const navigation = useNavigation();
+  const toTweetAddScreen = () => {
+    navigation.navigate("TweetAdd");
+  };
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={{flexGrow: 1}}> 
+        <View style={{alignItems: "center"}}>
+          <Text>TweetListScreen</Text>
+          <FAB style={{width: 56}} icon="pencil" onPress={() => {toTweetAddScreen()}} />
+          <StatusBar style="auto" />
+          <StatusBar style="auto" />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

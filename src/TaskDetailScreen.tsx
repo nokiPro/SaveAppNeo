@@ -98,7 +98,7 @@ export function TaskDetailScreen(props: Props) {
             keyExtractor={(item, index) => index.toString()}
           />
           <FAB
-            style={{ top: 60, left: "5%", width: 56, marginBottom: 50 }}
+            style={{ top: 60, left: "45%", width: 56, marginBottom: 50 }}
             icon="check"
             onPress={() => {onSave()}}
           />

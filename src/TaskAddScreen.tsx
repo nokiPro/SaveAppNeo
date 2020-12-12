@@ -96,7 +96,7 @@ export function TaskAddScreen() {
             renderItem={renderTaskItem}
             keyExtractor={(item, index) => index.toString()}
           />
-          <FAB style={{ top: "10%",left: "5%" , width: 56, marginBottom: 50,}} icon="check" onPress={onSave} />
+          <FAB style={{ top: "10%",left: "45%" , width: 56, marginBottom: 50,}} icon="check" onPress={onSave} />
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
