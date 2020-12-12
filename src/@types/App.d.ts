@@ -6,14 +6,19 @@ interface Task {
     taskItems: string[];
 }
 
+interface Tweet {
+    tweetItem: string;
+    createdAt: string;
+}
+
 type RootStackParamList = {
     TaskItem: string[]
-    TaskAdd: {Task?: Task};
-    TaskList: {Task?: Task};
+    TaskAdd: {Task: Task};
+    TaskList: {Task: Task};
     TaskDetail: {Task: Task};
     TaskEdit: undefined;
     TaskNavigation: undefined;
-    TweetList: undefined;
-    TweetAdd: undefined;
+    TweetList: {Tweet: Tweet};
+    TweetAdd: {Tweet: Tweet};
     TweetNavigation: undefined;
 }

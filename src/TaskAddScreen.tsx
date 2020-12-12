@@ -20,7 +20,7 @@ import { useNavigation, RouteProp } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
 import { Item } from "../src/Compose/items";
 
-import { save } from "./Store";
+import { save } from "./TaskStore";
 import { add } from "react-native-reanimated";
 
 // type TaskAddEditScreenRouteProp = RouteProp<RootStackParamList, "TaskAdd">;
@@ -31,6 +31,7 @@ import { add } from "react-native-reanimated";
 
 const screenWidth = Dimensions.get("screen").width;
 
+//================================================================================================================================
 export function TaskAddScreen() {
   const [deadlineDate, setDeadlineDate] = React.useState("");
   const [taskName, setTaskName] = React.useState("");
@@ -42,7 +43,6 @@ export function TaskAddScreen() {
 
   const onSave = () => {
     save(deadlineDate, taskName, taskItems, Date.now());
-    console.log();
     navigation.goBack();
   };
 
@@ -78,6 +78,7 @@ export function TaskAddScreen() {
               onChangeText={(deadlineDate) => {
                 setDeadlineDate(deadlineDate);
               }}
+              
             />
             <TextInput
               style={styles.inputTitle}
@@ -89,20 +90,26 @@ export function TaskAddScreen() {
             />
           </View>
 
-          {/* ====================================================================== */}
           <FlatList
             style={{ flex: 1 }}
             data={taskItems}
             renderItem={renderTaskItem}
             keyExtractor={(item, index) => index.toString()}
           />
-          <FAB style={{ top: "10%",left: "45%" , width: 56, marginBottom: 50,}} icon="check" onPress={onSave} />
         </KeyboardAvoidingView>
       </ScrollView>
+      <TouchableOpacity
+        style={styles.saveButton}
+        onPress={() => {
+          onSave();
+        }}
+      >
+        <Text>save</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
-//==============================================================================
+//=============================================================================================================
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -142,11 +149,12 @@ const styles = StyleSheet.create({
     top: 80,
   },
 
-  ButtonContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-start",
-    top: 360,
-    left: "70%",
+  saveButton: {
+    backgroundColor: "#2aefd1",
+    width: "100%",
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center"
+
   },
 });

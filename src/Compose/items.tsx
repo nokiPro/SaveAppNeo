@@ -10,9 +10,11 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  DatePickerIOS,
 } from "react-native";
 
 import { FAB } from "react-native-paper";
+import { color } from "react-native-reanimated";
 
 export interface ItemProps {
   defaultValue?: string;
@@ -20,7 +22,19 @@ export interface ItemProps {
   onPressAddButton?: () => void;
 }
 
+
 export function Item(props: ItemProps) {
+const [buttonColor, setButtonColor] = useState("#eee");
+const [chosenDate, setChosenDate] = useState(new Date());
+
+  const checkIcon = () => {
+    if (buttonColor === "#eee") {
+      setButtonColor("#2aefd1");
+    } else {
+      setButtonColor("#eee");
+    }
+  }
+
   return (
     <View
       style={{
@@ -30,7 +44,7 @@ export function Item(props: ItemProps) {
         alignItems: "flex-start",
       }}
     >
-      <FAB style={{ top: 20, left: 20 }} icon="check" onPress={() => {}} />
+      <FAB style={{ top: 20, left: 20 ,backgroundColor: buttonColor }} icon="" onPress={() => {checkIcon()}} />
       <TextInput
         style={{
           borderWidth: 1,

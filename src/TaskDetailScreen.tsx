@@ -19,7 +19,7 @@ import { FAB } from "react-native-paper";
 import { Item } from "../src/Compose/items";
 import { useNavigation, RouteProp } from "@react-navigation/native";
 
-import { save } from "./Store";
+import { save } from "./TaskStore";
 
 
 type TaskDetailScreenRouteProp = RouteProp<RootStackParamList, "TaskDetail">;
@@ -37,9 +37,9 @@ export function TaskDetailScreen(props: Props) {
   const selectedTaskItem = props.route.params.Task.taskItems;
   const navigation = useNavigation();
 
-  const [deadlineDate, setDeadlineDate] = React.useState("");
-  const [taskName, setTaskName] = React.useState("");
-  const [taskItems, setTaskItems] = React.useState<string[]>([]);
+  const [deadlineDate, setDeadlineDate] = React.useState(selectedItem.deadlineDate);
+  const [taskName, setTaskName] = React.useState(selectedItem.taskName);
+  const [taskItems, setTaskItems] = React.useState<string[]>(selectedTaskItem);
 
   const onSave = () => {
     save(deadlineDate, taskName, taskItems, selectedItem.createdAt)

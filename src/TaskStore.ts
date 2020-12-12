@@ -28,3 +28,11 @@ export const loadAll = async () => {
     const tasks = await storage.getAllDataForKey(key);
     return tasks;
 }
+
+export const removeTaskInfoAsync = async (taskInfo: Task, ) => {
+    const key = "taskList";
+    await storage.remove({
+        key: key,
+        id: `${taskInfo.createdAt}`,
+    });
+}

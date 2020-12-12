@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 export function TweetNavigation() {
   return (
-    <Stack.Navigator initialRouteName="TweetList">
+    <Stack.Navigator>
       <Stack.Screen name="TweetList" component={TweetListScreen} />
       <Stack.Screen name="TweetAdd" component={TweetAddScreen} />
       <Stack.Screen name="Tweet" component={TaskNavigation} />
