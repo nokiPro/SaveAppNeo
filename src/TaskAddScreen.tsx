@@ -78,7 +78,6 @@ export function TaskAddScreen() {
               onChangeText={(deadlineDate) => {
                 setDeadlineDate(deadlineDate);
               }}
-              
             />
             <TextInput
               style={styles.inputTitle}
@@ -98,11 +97,9 @@ export function TaskAddScreen() {
           />
         </KeyboardAvoidingView>
       </ScrollView>
-      <TouchableOpacity
+      <TouchableOpacity 
         style={styles.saveButton}
-        onPress={() => {
-          onSave();
-        }}
+        onPress={() => {onSave()}}
       >
         <Text>save</Text>
       </TouchableOpacity>

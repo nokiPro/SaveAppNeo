@@ -29,12 +29,17 @@ const screenWidth = Dimensions.get("screen").width;
 //=============================================================================================================
 export function TaskListScreen() {
   const navigation = useNavigation();
-
-  const toTaskAddScreen = () => {
-    navigation.navigate("TaskAdd");
-  };
   const [tasks, setTasks] = useState<Task[]>([]);
 
+  const taskItemsList = tasks.map((task) =>
+  <Text>{task.taskName}</Text>
+);
+  
+    const toTaskAddScreen = () => {
+      console.log(taskItemsList);
+      navigation.navigate("TaskAdd");
+    };
+  
   useFocusEffect(
     React.useCallback(() => {
       updateTaskInfoListAsync();
@@ -96,11 +101,7 @@ export function TaskListScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.flatListContainerNeo}>
-        <FlatList
-          data={tasks}
-          renderItem={renderTask}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <Text>{taskItemsList}</Text>
       </ScrollView>
       <FAB
         style={styles.addButton}
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     right: 50,
-    backgroundColor: "#2aefd1",
+    backgroundColor: "#2aefd1"
   },
 
   flatListContainerNeo: {},
