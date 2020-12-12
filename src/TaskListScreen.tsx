@@ -31,11 +31,11 @@ export function TaskListScreen() {
   };
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const toTaskDetailScreen = (index) => {
+  const toTaskDetailScreen = (index:number) => {
     console.log(index);
     console.log(tasks[index]);
     const Task: Task = tasks[index];
-    navigation.navigate("TaskDetail",{ Task: Task} );
+    navigation.navigate("TaskDetail", { Task: Task} );
   }
 
   const selectMenu = () => {
@@ -71,7 +71,7 @@ export function TaskListScreen() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.flatListContainerNeo}>
           <FlatList
             data={tasks}
             renderItem={renderTask}
@@ -103,8 +103,13 @@ const styles = StyleSheet.create({
     right: 50,
   },
 
+  flatListContainerNeo: {
+    
+  },
+
   flatListContainer: {
-  
+    width: screenWidth * 1,
+    alignItems: "center",
   },
 
   flatListItem: {
@@ -120,10 +125,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 1,
-    width: "50%"
+    width: 200,
   },
 
   flatListItemDate: {
     fontSize: 25,
-  }
+  },
 });

@@ -9,6 +9,9 @@ import { TaskListScreen, TweetListScreen } from "./src/Screens";
 import { Provider as PaperProvider } from "react-native-paper";
 import { TaskNavigation } from './src/TaskNavigation';
 import { TweetNavigation } from './src/TweetNavigation';
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -18,7 +21,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        barStyle={{ backgroundColor: "#eee", height: "10%" }}
+        barStyle={{ backgroundColor: "#fff", height: "8%" }}
         activeColor="red"
         inactiveColor="#3e2465"
       >

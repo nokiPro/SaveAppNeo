@@ -16,7 +16,7 @@ export const save = (deadlineDate: string, taskName: string, taskItem: string[],
         data: {
         deadlineDate: deadlineDate,
         taskName: taskName,
-        taskItem: taskItem,
+        taskItems: taskItem,
         createdAt: createdAt,
         },
     });

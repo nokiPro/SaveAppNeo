@@ -2,13 +2,14 @@ interface Task {
     deadlineDate: string;
     taskName: string;
     createdAt: number;
-    items: string[]
+    items: string[];
+    taskItems: string[];
 }
 
 type RootStackParamList = {
     TaskItem: string[]
-    TaskAdd: undefined;
-    TaskList: {Task: Task};
+    TaskAdd: {Task?: Task};
+    TaskList: {Task?: Task};
     TaskDetail: {Task: Task};
     TaskEdit: undefined;
     TaskNavigation: undefined;
