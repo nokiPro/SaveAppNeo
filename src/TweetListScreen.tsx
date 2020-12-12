@@ -93,7 +93,7 @@ export function TweetListScreen() {
       </ScrollView>
       <FAB
         style={styles.addButton}
-        icon="pencil"
+        icon="leaf"
         onPress={() => {
           toTweetAddScreen();
         }}

@@ -22,6 +22,7 @@ import { removeTaskInfoAsync, loadAll } from "./TaskStore";
 import { render } from "react-dom";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -33,7 +34,10 @@ export function TaskListScreen() {
 
   const taskItemsList = tasks.map((task) =>
   <Text>{task.taskName}</Text>
-);
+  );
+  const taskItemsListDate = tasks.map((task) => 
+    <Text>{task.deadlineDate}</Text>
+  );
   
     const toTaskAddScreen = () => {
       console.log(taskItemsList);
@@ -100,12 +104,15 @@ export function TaskListScreen() {
   //========================================================================================================
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.flatListContainerNeo}>
-        <Text>{taskItemsList}</Text>
+      <ScrollView>
+        <View style={styles.listContainer}>
+          <Text>{taskItemsList}</Text>
+          <Text>{taskItemsListDate}</Text>
+        </View>
       </ScrollView>
       <FAB
         style={styles.addButton}
-        icon="pencil"
+        icon="tools"
         onPress={() => {
           toTaskAddScreen();
         }}
@@ -126,33 +133,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     right: 50,
-    backgroundColor: "#2aefd1"
-  },
-
-  flatListContainerNeo: {},
-
-  flatListContainer: {
-    width: screenWidth * 1,
-    alignItems: "center",
-  },
-
-  flatListItem: {
     backgroundColor: "#2aefd1",
-    borderRadius: 5,
-    height: 80,
-    margin: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 1,
-    width: 200,
   },
 
-  flatListItemDate: {
-    fontSize: 25,
+  listContainer: {
+    backgroundColor: "#2aefd1",
   },
 });

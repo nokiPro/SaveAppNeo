@@ -24,14 +24,14 @@ export interface ItemProps {
 
 
 export function Item(props: ItemProps) {
-const [buttonColor, setButtonColor] = useState("#eee");
+const [buttonColor, setButtonColor] = useState("#c4d4e3");
 const [chosenDate, setChosenDate] = useState(new Date());
 
   const checkIcon = () => {
-    if (buttonColor === "#eee") {
+    if (buttonColor === "#c4d4e3") {
       setButtonColor("#2aefd1");
     } else {
-      setButtonColor("#eee");
+      setButtonColor("#c4d4e3");
     }
   }
 
@@ -44,11 +44,18 @@ const [chosenDate, setChosenDate] = useState(new Date());
         alignItems: "flex-start",
       }}
     >
-      <FAB style={{ top: 20, left: 20 ,backgroundColor: buttonColor }} icon="" onPress={() => {checkIcon()}} />
+      <FAB
+        style={{ top: 20, left: 20, backgroundColor: buttonColor }}
+        icon=""
+        onPress={() => {
+          checkIcon();
+        }}
+      />
       <TextInput
         style={{
           borderWidth: 1,
           borderRadius: 5,
+          borderColor: "#c4d4e3",
           fontSize: 15,
           width: "70%",
           left: "25%",
@@ -57,6 +64,7 @@ const [chosenDate, setChosenDate] = useState(new Date());
           height: 150,
           paddingBottom: 5,
           paddingLeft: 5,
+          
         }}
         multiline={true}
         onChangeText={props.onChangeText}

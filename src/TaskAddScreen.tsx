@@ -101,7 +101,7 @@ export function TaskAddScreen() {
         style={styles.saveButton}
         onPress={() => {onSave()}}
       >
-        <Text>save</Text>
+        <Text style={styles.saveButtonText}>✓</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -151,7 +151,18 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 60,
     alignItems: "center",
-    justifyContent: "center"
-
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
+
+  saveButtonText: {
+    fontSize: 30,
+    color: "#fff"
+  }
 });

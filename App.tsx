@@ -22,7 +22,26 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName = "list-circle";
+
+            if (route.name === "Task") {
+              iconName = focused ? "clipboard-outline" : "clipboard-outline";
+            } else if (route.name === "Tweet") {
+              iconName = focused ? "chatbox-outline" : "chatbox-outline";
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "#0f5c55",
+          inactiveTintColor: "#c4d4e3",
+        }}
+      >
         <Tab.Screen name="Task" component={TaskNavigation} />
         <Tab.Screen name="Tweet" component={TweetNavigation} />
       </Tab.Navigator>
