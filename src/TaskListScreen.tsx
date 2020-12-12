@@ -7,7 +7,6 @@ import {
   ScrollView,
   SafeAreaView,
   Dimensions,
-  Task,
   FlatList,
   ListRenderItemInfo,
   Alert,
@@ -40,13 +39,14 @@ export function TaskListScreen() {
   );
   
     const toTaskAddScreen = () => {
-      console.log(taskItemsList);
+      console.log(tasks);
       navigation.navigate("TaskAdd");
     };
   
   useFocusEffect(
     React.useCallback(() => {
       updateTaskInfoListAsync();
+      console.log(tasks);
     }, [])
   );
 
@@ -81,33 +81,24 @@ export function TaskListScreen() {
     ]);
   };
 
-  const renderTask = ({ item, index }: ListRenderItemInfo<any>) => {
-    return (
-      <View style={styles.flatListContainer}>
-        <TouchableOpacity
-          style={styles.flatListItem}
-          onPress={() => {
-            toTaskDetailScreen(index);
-          }}
-          onLongPress={() => {
-            selectMenu(item);
-          }}
-          >
-          <Text style={styles.flatListItemDate}>{item.deadlineDate}</Text>
-          <Text>{item.taskName}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
 
   //========================================================================================================
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.listContainer}>
-          <Text>{taskItemsList}</Text>
-          <Text>{taskItemsListDate}</Text>
+          {tasks.map((item, index) => {
+            return (
+              <TouchableOpacity 
+                style={styles.listContainerItem}
+                onPress={() => {toTaskDetailScreen(index)}}
+                onLongPress={() => {selectMenu(item)}}
+              >
+                <Text style={styles.itemDate}>{item.deadlineDate}</Text>
+                <Text style={styles.itemName}>{item.taskName}</Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
       <FAB
@@ -137,6 +128,35 @@ const styles = StyleSheet.create({
   },
 
   listContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: screenWidth * 0.9,
+    right: "5%",
+  },
+
+  listContainerItem: {
     backgroundColor: "#2aefd1",
+    borderRadius: 5,
+    width: 150,
+    height: 80,
+    padding: 5,
+    marginTop: 50,
+    marginLeft: 40,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+
+  itemDate: {
+    fontSize: 20,
+  },
+
+  itemName: {
+    paddingTop: 10,
+    fontSize: 15,
   },
 });

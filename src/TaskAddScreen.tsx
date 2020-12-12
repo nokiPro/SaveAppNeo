@@ -13,6 +13,7 @@ import {
   FlatList,
   Platform,
   ListRenderItemInfo,
+  DatePickerIOS,
 } from "react-native";
 
 import { useNavigation, RouteProp } from "@react-navigation/native";
@@ -33,6 +34,7 @@ const screenWidth = Dimensions.get("screen").width;
 
 //================================================================================================================================
 export function TaskAddScreen() {
+  const [chosenDate, setChosenDate] = useState(new Date());
   const [deadlineDate, setDeadlineDate] = React.useState("");
   const [taskName, setTaskName] = React.useState("");
   const [taskItems, setTaskItems] = React.useState<string[]>(["", ""]);
@@ -42,6 +44,9 @@ export function TaskAddScreen() {
   const navigation = useNavigation();
 
   const onSave = () => {
+    console.log(deadlineDate);
+    console.log(taskItems);
+    console.log(taskName);
     save(deadlineDate, taskName, taskItems, Date.now());
     navigation.goBack();
   };
