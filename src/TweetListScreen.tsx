@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { loadAll, removeTweetInfoAsync } from "./TweetStore";
 import { useFocusEffect } from "@react-navigation/native";
+import moment from "moment";
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -70,10 +71,15 @@ export function TweetListScreen() {
           selectMenu(item);
         }}
       >
-        <View style={styles.tweetItem}>
-          <Text style={styles.tweetItemText}>{item.tweetItem}</Text>
-          <Text style={styles.tweetItemAt}>{item.createdAt}</Text>
-        </View>
+        <List.Item
+          style={styles.tweetItem}
+          title={item.tweetItem}
+          titleNumberOfLines={5}
+          description={`作成日時：${moment(item.createdAt).format(
+            "yyyy-MM-DD ddd HH:mm"
+          )}`}
+          descriptionStyle={styles.description}
+        />
       </TouchableOpacity>
     );
   };
@@ -87,6 +93,7 @@ export function TweetListScreen() {
             data={tweetItems}
             renderItem={renderTweet}
             keyExtractor={(item, index) => index.toString()}
+
           />
           <StatusBar style="auto" />
         </View>
@@ -140,5 +147,10 @@ const styles = StyleSheet.create({
     textAlign: "right",
     paddingRight: 30,
     color: "#c4d4e3",
+  },
+  
+  description: {
+    flex: 1,
+    textAlign: "right",
   },
 });
