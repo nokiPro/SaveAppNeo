@@ -43,7 +43,7 @@ export function TaskDetailScreen(props: Props) {
 
   const onSave = () => {
     save(deadlineDate, taskName, taskItems, selectedItem.createdAt)
-    console.log();
+    //console.log();
     navigation.goBack();
   };
 
@@ -93,7 +93,7 @@ export function TaskDetailScreen(props: Props) {
           </View>
           <FlatList
             style={{ flex: 1 }}
-            data={selectedItem.taskItems}
+            data={taskItems}
             renderItem={renderTaskItem}
             keyExtractor={(item, index) => index.toString()}
           />

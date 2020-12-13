@@ -30,6 +30,7 @@ export function TaskAddScreen() {
   const [taskItems, setTaskItems] = React.useState<string[]>(["", ""]);
   const [chosenDate, setChosenDate] = useState(new Date());
   const navigation = useNavigation();
+
   const onSave = () => {
     console.log(deadlineDate);
     console.log(taskItems);
@@ -40,6 +41,7 @@ export function TaskAddScreen() {
   const [date, setDate] = useState<number>(Date.now());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
@@ -97,16 +99,24 @@ export function TaskAddScreen() {
                 setTaskName(taskName);
               }}
             />
+            <TextInput
+              style={styles.inputLimit}
+              placeholder="締切日"
+              autoCapitalize="none"
+              onChangeText={(deadlineDate) => {
+                setTaskName(deadlineDate);
+              }}
+            />
             <View>
-                <DateTimePicker
-                  style={{width: 130, marginTop: 20,}}
-                  testID="dateTimePicker"
-                  value={date}
-                  mode={mode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={onChange}
-                />
+              {/* <DateTimePicker
+                style={{ width: 130, marginTop: 20 }}
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              /> */}
             </View>
           </View>
           <FlatList
