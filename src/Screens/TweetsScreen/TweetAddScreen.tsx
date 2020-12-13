@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView } from "react-native";
 import { FAB, List } from "react-native-paper";
 import React, { useEffect, useState } from "react";
-import { save } from "./TweetStore";
+import { save } from "../../Stores/TweetStore";
 import { useNavigation, RouteProp } from "@react-navigation/native";
 
 export function TweetAddScreen() {

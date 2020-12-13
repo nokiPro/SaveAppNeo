@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {
   TweetListScreen,
   TweetAddScreen,
-} from "./Screens";
+} from "../Screens/Screens";
 
 const Stack = createStackNavigator();
 

@@ -15,7 +15,7 @@ import { FAB, List } from "react-native-paper";
 
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { loadAll, removeTweetInfoAsync } from "./TweetStore";
+import { loadAll, removeTweetInfoAsync } from "../../Stores/TweetStore";
 import { useFocusEffect } from "@react-navigation/native";
 import moment from "moment";
 

@@ -8,7 +8,7 @@ import {
   TaskEditScreen,
   TaskDetailScreen,
   //TweetNavigation,
-} from "./Screens";
+} from "../Screens/Screens";
 
 const Stack = createStackNavigator();
 

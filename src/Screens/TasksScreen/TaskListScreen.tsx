@@ -17,7 +17,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { FAB, List } from "react-native-paper";
 
 import { useNavigation,} from "@react-navigation/native";
-import { removeTaskInfoAsync, loadAll } from "./TaskStore";
+import { removeTaskInfoAsync, loadAll } from "../../Stores/TaskStore";
 import { render } from "react-dom";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";

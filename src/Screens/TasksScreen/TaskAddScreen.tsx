@@ -13,41 +13,68 @@ import {
   FlatList,
   Platform,
   ListRenderItemInfo,
+  DatePickerIOS,
   Alert,
 } from "react-native";
-
-import { FAB } from "react-native-paper";
-import { Item } from "../src/Compose/items";
 import { useNavigation, RouteProp } from "@react-navigation/native";
-
-import { save } from "./TaskStore";
-
-
-type TaskDetailScreenRouteProp = RouteProp<RootStackParamList, "TaskDetail">;
-
-type Props = {
-  route: TaskDetailScreenRouteProp;
-};
-
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { FAB } from "react-native-paper";
+import { Item } from "../../Components/items";
+import { save } from "../../Stores/TaskStore";
+import { add } from "react-native-reanimated";
+import { render } from "react-dom";
 const screenWidth = Dimensions.get("screen").width;
-
-
-export function TaskDetailScreen(props: Props) {
-  //const selectedItem = props.route.params.Task;
-  const selectedItem = props.route.params.Task;
-  const selectedTaskItem = props.route.params.Task.taskItems;
+//================================================================================================================================
+export function TaskAddScreen() {
+  const [deadlineDate, setDeadlineDate] = React.useState("");
+  const [taskName, setTaskName] = React.useState("");
+  const [taskItems, setTaskItems] = React.useState<string[]>(["", ""]);
+  const [chosenDate, setChosenDate] = useState(new Date());
   const navigation = useNavigation();
 
-  const [deadlineDate, setDeadlineDate] = React.useState(selectedItem.deadlineDate);
-  const [taskName, setTaskName] = React.useState(selectedItem.taskName);
-  const [taskItems, setTaskItems] = React.useState<string[]>(selectedTaskItem);
-
   const onSave = () => {
-    save(deadlineDate, taskName, taskItems, selectedItem.createdAt)
-    //console.log();
+    console.log(deadlineDate);
+    console.log(taskItems);
+    console.log(taskName);
+    save(deadlineDate, taskName, taskItems, Date.now());
     navigation.goBack();
   };
+  const [date, setDate] = useState<number>(Date.now());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
 
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate || date;
+  //   setShow(Platform.OS === "ios");
+  //   setDate(currentDate);
+  // };
+  // const showMode = (currentMode) => {
+  //   setShow(true);
+  //   setMode(currentMode);
+  // };
+  // const showDatepicker = () => {
+  //   showMode("date");
+  // };
+  // const iosDatePicker = () => {
+  //   return (
+  //     <DatePickerIOS
+  //       style={{width: "100%"}}
+  //       date={chosenDate}
+  //       onDateChange={setChosenDate}
+  //     />
+  //   );
+  // }
+  // const androidDatePicker = () => {
+  //   return(
+  //   );
+  // }
+
+  // const updateTaskItemAsync = async () => {
+  //   const newTaskInfoList = await loadAll();
+  //   setTasks(newTaskInfoList.reverse());
+  // };
+
+  //長押し削除処理
   const removeTaskItemAsync = async (index: number) => {
     const newTaskItems = taskItems.slice();
     newTaskItems.splice(index, 1);
@@ -69,26 +96,25 @@ export function TaskDetailScreen(props: Props) {
     ]);
   };
 
-    const renderTaskItem = ({ item, index }: ListRenderItemInfo<string>) => {
-      return (
-        <Item
-          defaultValue={item}
-          onPressAddButton={() => {
-            const newTaskItems = taskItems.slice();
-            newTaskItems.splice(index + 1, 0, "");
-            setTaskItems(newTaskItems);
-            console.log(taskItems);
-          }}
-          onChangeText={(text) => {
-            taskItems[index] = text;
-          }}
-          selectMenu={() => {
-            selectMenu(index);
-          }}
-        />
-      );
-    };
-
+  const renderTaskItem = ({ item, index }: ListRenderItemInfo<string>) => {
+    return (
+      <Item
+        defaultValue={item}
+        onPressAddButton={() => {
+          const newTaskItems = taskItems.slice();
+          newTaskItems.splice(index + 1, 0, "");
+          setTaskItems(newTaskItems);
+          console.log(taskItems);
+        }}
+        onChangeText={(text) => {
+          taskItems[index] = text;
+        }}
+        selectMenu={() => {
+          selectMenu(index);
+        }}
+      />
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
@@ -98,22 +124,31 @@ export function TaskDetailScreen(props: Props) {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputLimit}
-              placeholder="締め切り"
+              placeholder="締切日"
               autoCapitalize="none"
-              defaultValue={selectedItem.deadlineDate}
               onChangeText={(deadlineDate) => {
                 setDeadlineDate(deadlineDate);
               }}
             />
-            <TextInput
-              style={styles.inputTitle}
-              placeholder="タスク名"
-              autoCapitalize="none"
-              defaultValue={selectedItem.taskName}
-              onChangeText={(taskName) => {
-                setTaskName(taskName);
-              }}
-            />
+              <TextInput
+                style={styles.inputLimit}
+                placeholder="タスク名"
+                autoCapitalize="none"
+                onChangeText={(taskName) => {
+                  setTaskName(taskName);
+                }}
+              />
+            <View>
+              {/* <DateTimePicker
+                style={{ width: 130, marginTop: 20 }}
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              /> */}
+            </View>
           </View>
           <FlatList
             style={{ flex: 1 }}
@@ -124,6 +159,7 @@ export function TaskDetailScreen(props: Props) {
             }
           />
         </KeyboardAvoidingView>
+      
       <TouchableOpacity
         style={styles.saveButton}
         onPress={() => {
@@ -135,7 +171,7 @@ export function TaskDetailScreen(props: Props) {
     </SafeAreaView>
   );
 }
-
+//=============================================================================================================
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -176,21 +212,12 @@ const styles = StyleSheet.create({
   },
 
   itemContainer: {
-    height: 200,
+    height: 20,
     backgroundColor: "red",
     flex: 1,
     alignItems: "flex-start",
     top: 80,
   },
-
-  ButtonContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-start",
-    top: 360,
-    left: "70%",
-  },
-
   saveButton: {
     backgroundColor: "#2AEFD1",
     width: "100%",
