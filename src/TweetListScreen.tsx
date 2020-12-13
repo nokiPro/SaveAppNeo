@@ -150,5 +150,6 @@ const styles = StyleSheet.create({
   description: {
     flex: 1,
     textAlign: "right",
+    marginTop: 20,
   },
 });
