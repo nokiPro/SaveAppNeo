@@ -13,34 +13,23 @@ import {
   FlatList,
   Platform,
   ListRenderItemInfo,
+  DatePickerIOS,
 } from "react-native";
-
 import { useNavigation, RouteProp } from "@react-navigation/native";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { FAB } from "react-native-paper";
 import { Item } from "../src/Compose/items";
-
 import { save } from "./TaskStore";
 import { add } from "react-native-reanimated";
-
-// type TaskAddEditScreenRouteProp = RouteProp<RootStackParamList, "TaskAdd">;
-
-// type Props = {
-//   route: TaskAddEditScreenRouteProp;
-// };
-
+import { render } from "react-dom";
 const screenWidth = Dimensions.get("screen").width;
-
 //================================================================================================================================
 export function TaskAddScreen() {
   const [deadlineDate, setDeadlineDate] = React.useState("");
   const [taskName, setTaskName] = React.useState("");
   const [taskItems, setTaskItems] = React.useState<string[]>(["", ""]);
-
-  // const selectedItem = props.route.params.Task;
-
+  const [chosenDate, setChosenDate] = useState(new Date());
   const navigation = useNavigation();
-
   const onSave = () => {
     console.log(deadlineDate);
     console.log(taskItems);
@@ -48,7 +37,34 @@ export function TaskAddScreen() {
     save(deadlineDate, taskName, taskItems, Date.now());
     navigation.goBack();
   };
-
+  const [date, setDate] = useState<number>(Date.now());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+  };
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+  const showDatepicker = () => {
+    showMode("date");
+  };
+  // const iosDatePicker = () => {
+  //   return (
+  //     <DatePickerIOS
+  //       style={{width: "100%"}}
+  //       date={chosenDate}
+  //       onDateChange={setChosenDate}
+  //     />
+  //   );
+  // }
+  // const androidDatePicker = () => {
+  //   return(
+  //   );
+  // }
   const renderTaskItem = ({ item, index }: ListRenderItemInfo<string>) => {
     return (
       <Item
@@ -62,7 +78,6 @@ export function TaskAddScreen() {
         onChangeText={(text) => {
           taskItems[index] = text;
         }}
-      
       />
     );
   };
@@ -76,22 +91,24 @@ export function TaskAddScreen() {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputLimit}
-              placeholder="締め切り"
-              autoCapitalize="none"
-              onChangeText={(deadlineDate) => {
-                setDeadlineDate(deadlineDate);
-              }}
-            />
-            <TextInput
-              style={styles.inputTitle}
               placeholder="タスク名"
               autoCapitalize="none"
               onChangeText={(taskName) => {
                 setTaskName(taskName);
               }}
             />
+            <View>
+                <DateTimePicker
+                  style={{width: 130, marginTop: 20,}}
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  is24Hour={true}
+                  display="default"
+                  onChange={onChange}
+                />
+            </View>
           </View>
-
           <FlatList
             style={{ flex: 1 }}
             data={taskItems}
@@ -100,9 +117,11 @@ export function TaskAddScreen() {
           />
         </KeyboardAvoidingView>
       </ScrollView>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.saveButton}
-        onPress={() => {onSave()}}
+        onPress={() => {
+          onSave();
+        }}
       >
         <Text style={styles.saveButtonText}>✓</Text>
       </TouchableOpacity>
@@ -117,7 +136,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   inputContainer: {
     flex: 1,
     justifyContent: "center",
@@ -125,14 +143,12 @@ const styles = StyleSheet.create({
     left: "10%",
     height: 150,
   },
-
   inputLimit: {
     borderBottomWidth: 2,
     borderBottomColor: "#eee",
     fontSize: 30,
     backgroundColor: "#fff",
   },
-
   inputTitle: {
     paddingTop: 10,
     borderBottomWidth: 2,
@@ -140,7 +156,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     backgroundColor: "#fff",
   },
-
   itemContainer: {
     height: 200,
     backgroundColor: "red",
@@ -148,9 +163,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     top: 80,
   },
-
   saveButton: {
-    backgroundColor: "#2aefd1",
+    backgroundColor: "#2AEFD1",
     width: "100%",
     height: 60,
     alignItems: "center",
@@ -163,9 +177,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
-
   saveButtonText: {
     fontSize: 30,
     color: "#fff"
   }
 });
+
+
+
