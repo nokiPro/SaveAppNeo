@@ -23,8 +23,8 @@ export const save = (tweetItem: string, createdAt: number) => {
 
 export const loadAll = async () => {
     const key = "tweetList";
-    const tweets = await storage.getAllDataForKey(key);
-    return tweets;
+    const tweetItems = await storage.getAllDataForKey(key);
+    return tweetItems;
 }
 
 export const removeTweetInfoAsync = async (tweetInfo: Tweet, ) => {

@@ -12,6 +12,7 @@ export function TweetAddScreen() {
 
   const onSave = () => {
     save(tweetItem, Date.now());
+    console.log(tweetItem);
     navigation.goBack();
   };
 

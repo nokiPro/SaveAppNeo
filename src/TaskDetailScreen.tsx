@@ -91,7 +91,6 @@ export function TaskDetailScreen(props: Props) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{ flexGrow: 1 }}>
         <KeyboardAvoidingView
           style={{ flex: 1, width: screenWidth * 1 }}
           behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -125,7 +124,6 @@ export function TaskDetailScreen(props: Props) {
             }
           />
         </KeyboardAvoidingView>
-      </ScrollView>
       <TouchableOpacity
         style={styles.saveButton}
         onPress={() => {
@@ -147,24 +145,32 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    flex: 1,
-    justifyContent: "center",
+    //justifyContent: "center",
     alignItems: "flex-start",
-    left: "10%",
-    height: 150,
+    backgroundColor: "#fff",
+    width: screenWidth * 1,
+    height: 100,
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    marginBottom: 5,
+    zIndex: 10,
+    padding: 10,
   },
 
   inputLimit: {
-    borderBottomWidth: 2,
-    borderBottomColor: "#eee",
-    fontSize: 30,
+    fontSize: 25,
     backgroundColor: "#fff",
+    margin: 5,
   },
 
   inputTitle: {
     paddingTop: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: "#eee",
     fontSize: 30,
     backgroundColor: "#fff",
   },
@@ -199,7 +205,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
-  
+
   saveButtonText: {
     fontSize: 30,
     color: "#fff",

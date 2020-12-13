@@ -89,7 +89,7 @@ export function TaskListScreen() {
         <View style={styles.listContainer}>
           {tasks.map((item, index) => {
             return (
-              <TouchableOpacity 
+              <TouchableOpacity key={index.toString()}
                 style={styles.listContainerItem}
                 onPress={() => {toTaskDetailScreen(index)}}
                 onLongPress={() => {selectMenu(item)}}

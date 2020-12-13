@@ -34,7 +34,7 @@ export function TweetListScreen() {
 
 
   const toTweetAddScreen = () => {
-    console.log(tweetItems);
+    //console.log(tweetItems);
     navigation.navigate("TweetAdd");
   };
 
@@ -86,7 +86,6 @@ export function TweetListScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={{ flexGrow: 1 }}>
         <View style={{ alignItems: "center" }}>
           <FlatList
             style={styles.tweetList}
@@ -97,7 +96,6 @@ export function TweetListScreen() {
           />
           <StatusBar style="auto" />
         </View>
-      </ScrollView>
       <FAB
         style={styles.addButton}
         icon="leaf"

@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {
   TweetListScreen,
   TweetAddScreen,
-  TaskNavigation
 } from "./Screens";
 
 const Stack = createStackNavigator();
@@ -15,7 +14,6 @@ export function TweetNavigation() {
     <Stack.Navigator>
       <Stack.Screen name="TweetList" component={TweetListScreen} />
       <Stack.Screen name="TweetAdd" component={TweetAddScreen} />
-      <Stack.Screen name="Tweet" component={TaskNavigation} />
     </Stack.Navigator>
   );
 }
