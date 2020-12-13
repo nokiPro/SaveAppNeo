@@ -2,15 +2,13 @@ import { BottomTabBar } from "@react-navigation/bottom-tabs";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { SignUpScreen } from "./src/Screens/Screens";
+import { SignUpScreen, BottomTabNavigation } from "./src/Screens/Screens";
 
 export function TaskEditScreen() {
-  if (i =0){
-    return(
-      <BottomTabBar />
-    ) 
+  if (true){
+    return <BottomTabNavigation />; 
   } else {
-    <SignUpScreen />
+    return <SignUpScreen />
   }
 }
 

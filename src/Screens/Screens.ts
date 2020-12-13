@@ -7,3 +7,4 @@ export * from "./TweetsScreen/TweetAddScreen";
 export * from "./SingInUpScreen/SignInScreen";
 export * from "./SingInUpScreen/SignUpScreen";
 export * from "./SingInUpScreen/WelcomeScreen";
+export * from "../Navigations/BottomTabNavigation";
