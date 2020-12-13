@@ -14,6 +14,7 @@ import {
   Platform,
   ListRenderItemInfo,
   DatePickerIOS,
+  Alert,
 } from "react-native";
 import { useNavigation, RouteProp } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -67,6 +68,34 @@ export function TaskAddScreen() {
   //   return(
   //   );
   // }
+
+  // const updateTaskItemAsync = async () => {
+  //   const newTaskInfoList = await loadAll();
+  //   setTasks(newTaskInfoList.reverse());
+  // };
+
+  //長押し削除処理
+  const removeTaskItemAsync = async (index: number) => {
+    const newTaskItems = taskItems.slice();
+    newTaskItems.splice(index, 1);
+    setTaskItems(newTaskItems);
+  };
+
+  const selectMenu = (index: number) => {
+    Alert.alert(taskItems[index], "このアイテムの削除ができます。", [
+      {
+        text: "キャンセル",
+        style: "cancel",
+      },
+      {
+        text: "削除",
+        onPress: () => {
+          removeTaskItemAsync(index);
+        },
+      },
+    ]);
+  };
+
   const renderTaskItem = ({ item, index }: ListRenderItemInfo<string>) => {
     return (
       <Item
@@ -79,6 +108,9 @@ export function TaskAddScreen() {
         }}
         onChangeText={(text) => {
           taskItems[index] = text;
+        }}
+        selectMenu={() => {
+          selectMenu(index);
         }}
       />
     );
@@ -123,7 +155,9 @@ export function TaskAddScreen() {
             style={{ flex: 1 }}
             data={taskItems}
             renderItem={renderTaskItem}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) =>
+              Math.random().toString() + index.toString()
+            }
           />
         </KeyboardAvoidingView>
       </ScrollView>
@@ -189,9 +223,6 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     fontSize: 30,
-    color: "#fff"
-  }
+    color: "#fff",
+  },
 });
-
-
-

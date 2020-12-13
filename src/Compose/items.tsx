@@ -20,6 +20,7 @@ export interface ItemProps {
   defaultValue?: string;
   onChangeText?: (value: string) => void;
   onPressAddButton?: () => void;
+  selectMenu?: () => void;
 }
 
 
@@ -50,6 +51,7 @@ const [chosenDate, setChosenDate] = useState(new Date());
         onPress={() => {
           checkIcon();
         }}
+        onLongPress={props.selectMenu}
       />
       <TextInput
         style={{

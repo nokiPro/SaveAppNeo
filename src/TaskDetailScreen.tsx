@@ -13,6 +13,7 @@ import {
   FlatList,
   Platform,
   ListRenderItemInfo,
+  Alert,
 } from "react-native";
 
 import { FAB } from "react-native-paper";
@@ -47,6 +48,27 @@ export function TaskDetailScreen(props: Props) {
     navigation.goBack();
   };
 
+  const removeTaskItemAsync = async (index: number) => {
+    const newTaskItems = taskItems.slice();
+    newTaskItems.splice(index, 1);
+    setTaskItems(newTaskItems);
+  };
+
+  const selectMenu = (index: number) => {
+    Alert.alert(taskItems[index], "このアイテムの削除ができます。", [
+      {
+        text: "キャンセル",
+        style: "cancel",
+      },
+      {
+        text: "削除",
+        onPress: () => {
+          removeTaskItemAsync(index);
+        },
+      },
+    ]);
+  };
+
     const renderTaskItem = ({ item, index }: ListRenderItemInfo<string>) => {
       return (
         <Item
@@ -59,6 +81,9 @@ export function TaskDetailScreen(props: Props) {
           }}
           onChangeText={(text) => {
             taskItems[index] = text;
+          }}
+          selectMenu={() => {
+            selectMenu(index);
           }}
         />
       );
@@ -95,15 +120,20 @@ export function TaskDetailScreen(props: Props) {
             style={{ flex: 1 }}
             data={taskItems}
             renderItem={renderTaskItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
-          <FAB
-            style={{ top: 60, left: "45%", width: 56, marginBottom: 50 }}
-            icon="check"
-            onPress={() => {onSave()}}
+            keyExtractor={(item, index) =>
+              Math.random().toString() + index.toString()
+            }
           />
         </KeyboardAvoidingView>
       </ScrollView>
+      <TouchableOpacity
+        style={styles.saveButton}
+        onPress={() => {
+          onSave();
+        }}
+      >
+        <Text style={styles.saveButtonText}>✓</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -153,5 +183,25 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     top: 360,
     left: "70%",
+  },
+
+  saveButton: {
+    backgroundColor: "#2AEFD1",
+    width: "100%",
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  
+  saveButtonText: {
+    fontSize: 30,
+    color: "#fff",
   },
 });

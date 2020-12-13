@@ -46,7 +46,7 @@ export function TaskListScreen() {
   useFocusEffect(
     React.useCallback(() => {
       updateTaskInfoListAsync();
-      console.log(tasks);
+      //console.log(tasks);
     }, [])
   );
 
