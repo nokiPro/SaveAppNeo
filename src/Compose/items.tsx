@@ -10,17 +10,32 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  DatePickerIOS,
 } from "react-native";
 
 import { FAB } from "react-native-paper";
+import { color } from "react-native-reanimated";
 
 export interface ItemProps {
   defaultValue?: string;
   onChangeText?: (value: string) => void;
   onPressAddButton?: () => void;
+  selectMenu?: () => void;
 }
 
+
 export function Item(props: ItemProps) {
+const [buttonColor, setButtonColor] = useState("#c4d4e3");
+const [chosenDate, setChosenDate] = useState(new Date());
+
+  const checkIcon = () => {
+    if (buttonColor === "#c4d4e3") {
+      setButtonColor("#2aefd1");
+    } else {
+      setButtonColor("#c4d4e3");
+    }
+  }
+
   return (
     <View
       style={{
@@ -30,19 +45,19 @@ export function Item(props: ItemProps) {
         alignItems: "flex-start",
       }}
     >
-      <FAB style={{ top: 20, left: 20 }} icon="check" onPress={() => {}} />
-      <View
-        style={{
-          borderLeftWidth: 3,
-          height: 120,
-          top: 40,
-          left: 45,
+      <FAB
+        style={{ top: 20, left: 20, backgroundColor: buttonColor }}
+        icon=""
+        onPress={() => {
+          checkIcon();
         }}
-      ></View>
+        onLongPress={props.selectMenu}
+      />
       <TextInput
         style={{
           borderWidth: 1,
           borderRadius: 5,
+          borderColor: "#c4d4e3",
           fontSize: 15,
           width: "70%",
           left: "25%",
@@ -51,16 +66,17 @@ export function Item(props: ItemProps) {
           height: 150,
           paddingBottom: 5,
           paddingLeft: 5,
+          
         }}
         multiline={true}
         onChangeText={props.onChangeText}
         defaultValue={props.defaultValue}
       />
       <TouchableOpacity
-        style={{ top: 10, left: "50%" }}
+        style={{ top: 130, left: "50%" }}
         onPress={props.onPressAddButton}
       >
-        <Text style={{ fontSize: 30 }}>+</Text>
+        <Text style={{ fontSize: 30, color: "#c4d4e3" }}>+</Text>
       </TouchableOpacity>
     </View>
   );

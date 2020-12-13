@@ -7,9 +7,9 @@ import {
   ScrollView,
   SafeAreaView,
   Dimensions,
-  Task,
   FlatList,
   ListRenderItemInfo,
+  Alert,
 } from "react-native";
 import moment from "moment";
 
@@ -17,68 +17,93 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { FAB, List } from "react-native-paper";
 
 import { useNavigation,} from "@react-navigation/native";
-import { loadAll } from "./Store";
+import { removeTaskInfoAsync, loadAll } from "./TaskStore";
 import { render } from "react-dom";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const screenWidth = Dimensions.get("screen").width;
 
+
+//=============================================================================================================
 export function TaskListScreen() {
   const navigation = useNavigation();
-
-  const toTaskAddScreen = () => {
-    navigation.navigate("TaskAdd");
-  };
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const toTaskDetailScreen = (index) => {
-    console.log(index);
-    console.log(tasks[index]);
+  const taskItemsList = tasks.map((task) =>
+  <Text>{task.taskName}</Text>
+  );
+  const taskItemsListDate = tasks.map((task) => 
+    <Text>{task.deadlineDate}</Text>
+  );
+  
+    const toTaskAddScreen = () => {
+      console.log(tasks);
+      navigation.navigate("TaskAdd");
+    };
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      updateTaskInfoListAsync();
+      //console.log(tasks);
+    }, [])
+  );
+
+  const toTaskDetailScreen = (index: number) => {
     const Task: Task = tasks[index];
-    navigation.navigate("TaskDetail",{ Task: Task} );
-  }
-
-  const selectMenu = () => {
-    alert(`削除したいよね、、、\nでも、まだできないんよ、、`)
-  }
-
-
-
-  useEffect(() => {
-    // 追加
-    // asyncで非同期で読み込みとstate更新を定義
-    const initialize = async () => {
-      // 追加
-      // awaitで読み込みが終わるまで待機
-      const newTasks = await loadAll(); // 追加
-      setTasks(newTasks.reverse()); // 追加
-    }; // 追加
-    // 画面が戻ってきた時に動作するようにnavigationの動作に追加
-    navigation.addListener("focus", initialize); // 追加
-  }); // 追加
-
-  const renderTask = ({ item, index }: ListRenderItemInfo<any>) => {
-    return (
-      <View style={styles.flatListContainer}>
-        <TouchableOpacity style={styles.flatListItem} onPress={() => {toTaskDetailScreen(index)}} onLongPress={() => {selectMenu()}}>
-          <Text style={styles.flatListItemDate}>{item.deadlineDate}</Text>
-          <Text>{item.taskName}</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    navigation.navigate("TaskDetail", { Task: Task });
   };
+
+  const updateTaskInfoListAsync = async () => {
+    const newTaskInfoList = await loadAll();
+    setTasks(newTaskInfoList.reverse());
+  };
+
+  //長押し削除処理
+  const removeTaskAndUpdateAsync = async (taskItem: Task) => {
+    await removeTaskInfoAsync(taskItem);
+    updateTaskInfoListAsync();
+  };
+
+  const selectMenu = (taskItem: Task) => {
+    Alert.alert(taskItem.taskName, "このタスクの削除ができます。", [
+      {
+        text: "キャンセル",
+        style: "cancel",
+      },
+      {
+        text: "削除",
+        onPress: () => {
+          removeTaskAndUpdateAsync(taskItem);
+        },
+      },
+    ]);
+  };
+
+
+  //========================================================================================================
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-          <FlatList
-            data={tasks}
-            renderItem={renderTask}
-            keyExtractor={(item, index) => index.toString()}
-          />
+        <View style={styles.listContainer}>
+          {tasks.map((item, index) => {
+            return (
+              <TouchableOpacity key={index.toString()}
+                style={styles.listContainerItem}
+                onPress={() => {toTaskDetailScreen(index)}}
+                onLongPress={() => {selectMenu(item)}}
+              >
+                <Text style={styles.itemDate}>{item.deadlineDate}</Text>
+                <Text style={styles.itemName}>{item.taskName}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </ScrollView>
       <FAB
         style={styles.addButton}
-        icon="pencil"
+        icon="tools"
         onPress={() => {
           toTaskAddScreen();
         }}
@@ -86,7 +111,7 @@ export function TaskListScreen() {
     </SafeAreaView>
   );
 }
-
+//===========================================================================================================
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
@@ -99,29 +124,39 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     right: 50,
+    backgroundColor: "#2aefd1",
   },
 
-  flatListContainer: {
-  
+  listContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: screenWidth * 0.9,
+    right: "5%",
   },
 
-  flatListItem: {
-    backgroundColor: "#FFE3D1",
+  listContainerItem: {
+    backgroundColor: "#2aefd1",
     borderRadius: 5,
+    width: 150,
     height: 80,
-    margin: 20,
+    padding: 5,
+    marginTop: 50,
+    marginLeft: 40,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 1,
-    width: "50%"
   },
 
-  flatListItemDate: {
-    fontSize: 25,
-  }
+  itemDate: {
+    fontSize: 20,
+  },
+
+  itemName: {
+    paddingTop: 10,
+    fontSize: 15,
+  },
 });

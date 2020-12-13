@@ -8,15 +8,13 @@ const storage = new Storage({
     enableCache: true,
 });
 
-export const save = (deadlineDate: string, taskName: string, taskItem: string[], createdAt: number) => {
-    const key = "taskList";
+export const save = (tweetItem: string, createdAt: number) => {
+    const key = "tweetList";
     storage.save({
         key: key,           // データの合言葉 keyでアンダースコア（"_"）を使用しないでください
         id: `${createdAt}`,      // これがないと常に上書きになってしまう。
         data: {
-        deadlineDate: deadlineDate,
-        taskName: taskName,
-        taskItem: taskItem,
+        tweetItem: tweetItem,
         createdAt: createdAt,
         },
     });
@@ -24,7 +22,15 @@ export const save = (deadlineDate: string, taskName: string, taskItem: string[],
 };
 
 export const loadAll = async () => {
-    const key = "taskList";
-    const tasks = await storage.getAllDataForKey(key);
-    return tasks;
+    const key = "tweetList";
+    const tweetItems = await storage.getAllDataForKey(key);
+    return tweetItems;
+}
+
+export const removeTweetInfoAsync = async (tweetInfo: Tweet, ) => {
+    const key = "tweetList";
+    await storage.remove({
+        key: key,
+        id: `${tweetInfo.createdAt}`,
+    });
 }
