@@ -43,18 +43,18 @@ export function TaskAddScreen() {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-  };
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-  const showDatepicker = () => {
-    showMode("date");
-  };
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate || date;
+  //   setShow(Platform.OS === "ios");
+  //   setDate(currentDate);
+  // };
+  // const showMode = (currentMode) => {
+  //   setShow(true);
+  //   setMode(currentMode);
+  // };
+  // const showDatepicker = () => {
+  //   showMode("date");
+  // };
   // const iosDatePicker = () => {
   //   return (
   //     <DatePickerIOS
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     backgroundColor: "#fff",
   },
-  
+
   itemContainer: {
     height: 20,
     backgroundColor: "red",
