@@ -24,6 +24,8 @@ import { save } from "../../Stores/TaskStore";
 import { add } from "react-native-reanimated";
 import { render } from "react-dom";
 const screenWidth = Dimensions.get("screen").width;
+
+
 //================================================================================================================================
 export function TaskAddScreen() {
   const [deadlineDate, setDeadlineDate] = React.useState("");
