@@ -16,6 +16,8 @@ import {
 import { FAB } from "react-native-paper";
 import { color } from "react-native-reanimated";
 
+import { saveButtonStatus } from "../Stores/TaskStore"
+
 export interface ItemProps {
   defaultValue?: string;
   onChangeText?: (value: string) => void;
@@ -33,18 +35,18 @@ const [chosenDate, setChosenDate] = useState(new Date());
       setButtonColor("#2aefd1");
     } else {
       setButtonColor("#c4d4e3");
-    }
+    };
   }
 
   return (
     <View
       style={{
-        height: 220,
+        height: 170,
         backgroundColor: "#fff",
         flex: 1,
         alignItems: "flex-start",
       }}
-    >
+      >
       <FAB
         style={{ top: 20, left: 20, backgroundColor: buttonColor }}
         icon=""
@@ -63,7 +65,7 @@ const [chosenDate, setChosenDate] = useState(new Date());
           left: "25%",
           position: "absolute",
           top: 20,
-          height: 150,
+          height: 100,
           paddingBottom: 5,
           paddingLeft: 5,
           
@@ -73,7 +75,7 @@ const [chosenDate, setChosenDate] = useState(new Date());
         defaultValue={props.defaultValue}
       />
       <TouchableOpacity
-        style={{ top: 130, left: "50%" }}
+        style={{ top: 80, left: "50%" }}
         onPress={props.onPressAddButton}
       >
         <Text style={{ fontSize: 30, color: "#c4d4e3" }}>+</Text>

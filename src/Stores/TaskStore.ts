@@ -23,6 +23,7 @@ export const save = (deadlineDate: string, taskName: string, taskItem: string[],
     alert("保存されました");
 };
 
+
 export const loadAll = async () => {
     const key = "taskList";
     const tasks = await storage.getAllDataForKey(key);
@@ -35,4 +36,21 @@ export const removeTaskInfoAsync = async (taskInfo: Task, ) => {
         key: key,
         id: `${taskInfo.createdAt}`,
     });
+}
+
+export const saveButtonStatus = (buttonColor: string) => {
+    const key = "buttonColor";
+    storage.save({
+        key: key,           // データの合言葉 keyでアンダースコア（"_"）を使用しないでください
+        id: `${buttonColor}`,      // これがないと常に上書きになってしまう。
+        data: {
+        buttonColor: buttonColor,
+        },
+    })
+}
+
+export const loadButtonColor = async () => {
+    const key = "buttonColor"
+    const buttonColor = await storage.getAllDataForKey(key);
+    return buttonColor;
 }
