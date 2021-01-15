@@ -30,16 +30,9 @@ const screenWidth = Dimensions.get("screen").width;
 export function TaskListScreen() {
   const navigation = useNavigation();
   const [tasks, setTasks] = useState<Task[]>([]);
-
-  const taskItemsList = tasks.map((task) =>
-  <Text>{task.taskName}</Text>
-  );
-  const taskItemsListDate = tasks.map((task) => 
-    <Text>{task.deadlineDate}</Text>
-  );
   
     const toTaskAddScreen = () => {
-      console.log(tasks);
+      //console.log(tasks);
       navigation.navigate("TaskAdd");
     };
   

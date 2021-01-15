@@ -35,9 +35,9 @@ export function TaskAddScreen() {
   const navigation = useNavigation();
 
   const onSave = () => {
-    console.log(deadlineDate);
-    console.log(taskItems);
-    console.log(taskName);
+    // console.log(deadlineDate);
+    // console.log(taskItems);
+    // console.log(taskName);
     save(deadlineDate, taskName, taskItems, Date.now());
     navigation.goBack();
   };

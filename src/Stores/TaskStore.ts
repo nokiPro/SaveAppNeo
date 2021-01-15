@@ -20,6 +20,7 @@ export const save = (deadlineDate: string, taskName: string, taskItem: string[],
         createdAt: createdAt,
         },
     });
+    // console.log(save)
     alert("保存されました");
 };
 
